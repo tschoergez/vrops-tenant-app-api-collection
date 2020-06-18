@@ -1,0 +1,975 @@
+{
+	"info": {
+		"_postman_id": "b747ba12-f698-4067-ab3f-6f1d46dfbd7a",
+		"name": "vRealize Operations Tenant App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RUN FIRST - Get vR Ops Auth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9a3fe9a5-49c9-4280-a966-1dbe66c20e0b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"tabearerToken\", jsonData.token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\" : \"{{user}}\",\r\n  \"authSource\" : \"local\",\r\n  \"password\" : \"{{pass}}\"\r\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/suite-api/api/auth/token/acquire",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"auth",
+						"token",
+						"acquire"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CPU  usage values",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1b911fdb-200a-4af5-bded-6c9face2bb95",
+						"exec": [
+							"var epoch = (new Date).getTime();",
+							"postman.setEnvironmentVariable(\"epoch\", epoch);",
+							"var epochPrev24 = epoch - (24*60*60*1000)",
+							"postman.setEnvironmentVariable(\"epochPrev24\", epochPrev24)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8baa490-3bc0-44bf-aa13-2bf29b8cd55b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceId\": [\n        \"57e81b7e-e457-49c3-b303-887c2d873560\"\n    ],\n    \"statKey\": [\n        \"cpu|usagemhz_average\"\n    ],\n    \"begin\": {{epochPrev24}},\n    \"end\": {{epoch}},\n    \"metrics\": true\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources/stats/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources",
+						"stats",
+						"query"
+					]
+				},
+				"description": "Example that uses \"Get Resources by resourceKind and Load var\" to provide a list of resource IDs using the {{resourceId}} env var."
+			},
+			"response": []
+		},
+		{
+			"name": "Get CPU usage hourly SUM",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8828ee68-2c3e-48e2-a337-a38774191491",
+						"exec": [
+							"var epoch = (new Date).getTime();",
+							"postman.setEnvironmentVariable(\"epoch\", epoch);",
+							"var epochPrev24 = epoch - (24*60*60*1000)",
+							"postman.setEnvironmentVariable(\"epochPrev24\", epochPrev24)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bc2d820-c3e3-4bee-9985-d8b9e6d0c493",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceId\": [\n        \"57e81b7e-e457-49c3-b303-887c2d873560\"\n    ],\n    \"statKey\": [\n        \"cpu|usagemhz_average\"\n    ],\n    \"begin\": {{epochPrev24}},\n    \"end\": {{epoch}},\n    \"metrics\": true,\n    \"intervalType\": \"HOURS\",\n    \"rollUpType\": \"SUM\"\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources/stats/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources",
+						"stats",
+						"query"
+					]
+				},
+				"description": "Example that uses \"Get Resources by resourceKind and Load var\" to provide a list of resource IDs using the {{resourceId}} env var."
+			},
+			"response": []
+		},
+		{
+			"name": "get pricing policies",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}",
+						"description": "(Required) "
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/pricingpolicy",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"pricingpolicy"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "get bills",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) ",
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"adapterKind\": [\n        \"vCloud\",\n        \"VMWARE\"\n    ],\n    \"resourceKind\": [\n        \"ORG\",\n        \"ORG_VDC\",\n        \"VAPP\",\n        \"VirtualMachine\",\n        \"PRO_VDC\",\n        \"ORG_VDC_STORAGE_PROFILE\",\n        \"EDGEGATEWAY\",\n        \"Media\",\n        \"VAPP_TEMPLATE\",\n        \"ORG_VDC_INDEPENDENT_DISK\"\n    ],\n    \"sortBy\": {\n        \"by\": \"billingDate\",\n        \"reverse\": true\n    },\n    \"filterBy\": []\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/bills/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"bills",
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				},
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "get pricing policy by id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}",
+						"description": "(Required) "
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/pricingpolicy/d95c8295-7acd-4700-966a-e493301f1386",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"pricingpolicy",
+						"d95c8295-7acd-4700-966a-e493301f1386"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get VM by Name",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=demo-vm-db-1f35",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources"
+					],
+					"query": [
+						{
+							"key": "adapterKind",
+							"value": "VMWARE"
+						},
+						{
+							"key": "resourceKind",
+							"value": "VirtualMachine"
+						},
+						{
+							"key": "name",
+							"value": "demo-vm-db-1f35"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CPU usage daily AVG",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8828ee68-2c3e-48e2-a337-a38774191491",
+						"exec": [
+							"var epoch = (new Date).getTime();",
+							"postman.setEnvironmentVariable(\"epoch\", epoch);",
+							"var epochPrev24 = epoch - (24*60*60*1000)",
+							"postman.setEnvironmentVariable(\"epochPrev24\", epochPrev24)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bc2d820-c3e3-4bee-9985-d8b9e6d0c493",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceId\": [\n        \"57e81b7e-e457-49c3-b303-887c2d873560\"\n    ],\n    \"statKey\": [\n        \"cpu|usagemhz_average\"\n    ],\n    \"begin\": {{epochPrev24}},\n    \"end\": {{epoch}},\n    \"metrics\": true,\n    \"intervalType\": \"DAYS\",\n    \"rollUpType\": \"AVG\"\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources/stats/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources",
+						"stats",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CPU usage daily AVG30",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8828ee68-2c3e-48e2-a337-a38774191491",
+						"exec": [
+							"var epoch = (new Date).getTime();",
+							"postman.setEnvironmentVariable(\"epoch\", epoch);",
+							"var epochPrev24 = epoch - (24*60*60*1000)",
+							"postman.setEnvironmentVariable(\"epochPrev24\", epochPrev24)",
+							"var epochPrev30days = epoch - (30*24*60*60*1000)",
+							"postman.setEnvironmentVariable(\"epochPrev30days\", epochPrev30days)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bc2d820-c3e3-4bee-9985-d8b9e6d0c493",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceId\": [\n        \"57e81b7e-e457-49c3-b303-887c2d873560\"\n    ],\n    \"statKey\": [\n        \"cpu|usagemhz_average\"\n    ],\n    \"begin\": {{epochPrev30days}},\n    \"end\": {{epoch}},\n    \"metrics\": true,\n    \"intervalType\": \"DAYS\",\n    \"rollUpType\": \"AVG\"\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources/stats/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources",
+						"stats",
+						"query"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
