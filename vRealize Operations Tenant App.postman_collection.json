@@ -593,6 +593,210 @@
 			]
 		},
 		{
+			"name": "get bills Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) ",
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"adapterKind\": [\n        \"vCloud\",\n        \"VMWARE\"\n    ],\n    \"resourceKind\": [\n        \"ORG\",\n        \"ORG_VDC\",\n        \"VAPP\",\n        \"VirtualMachine\",\n        \"PRO_VDC\",\n        \"ORG_VDC_STORAGE_PROFILE\",\n        \"EDGEGATEWAY\",\n        \"Media\",\n        \"VAPP_TEMPLATE\",\n        \"ORG_VDC_INDEPENDENT_DISK\"\n    ],\n    \"sortBy\": {\n        \"by\": \"billingDate\",\n        \"reverse\": true\n    },\n    \"filterBy\": []\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/bills/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"bills",
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
 			"name": "get pricing policy by id",
 			"request": {
 				"auth": {
@@ -969,6 +1173,571 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Activate Tenant - Step 1 - Get Org Identifier",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8828ee68-2c3e-48e2-a337-a38774191491",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bc2d820-c3e3-4bee-9985-d8b9e6d0c493",
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.resourceList[0].identifier);\r",
+							"console.log(jsonData.resourceList[0].resourceKey.resourceIdentifiers[0].value);\r",
+							"console.log(jsonData.resourceList[0].resourceKey.name)\r",
+							"\r",
+							"var template = `\r",
+							"    <table bgcolor=\"#FFFFFF\">\r",
+							"        <tr>\r",
+							"            <th>Org Name</th>\r",
+							"            <th>resourceId</th>\r",
+							"            <th>UUID</th>\r",
+							"        </tr>\r",
+							"\r",
+							"        {{#each response.resourceList}}\r",
+							"            <tr>\r",
+							"                <td>{{resourceKey.name}}</td>\r",
+							"                <td>{{identifier}}</td>\r",
+							"                <td>{{resourceKey.resourceIdentifiers.[0].value}}</td>\r",
+							"            </tr>\r",
+							"        {{/each}}\r",
+							"    </table>\r",
+							"`;\r",
+							"\r",
+							"pm.visualizer.set(template, {\r",
+							"    response: pm.response.json()\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceState\": [\n        \"FAILED\",\n        \"MAINTAINED\",\n        \"MAINTAINED_MANUAL\",\n        \"STARTED\",\n        \"STARTING\",\n        \"STOPPED\",\n        \"STOPPING\",\n        \"UNKNOWN\",\n        \"UPDATING\"\n    ],\n    \"adapterKind\": [\n        \"vCloud\"\n    ],\n    \"resourceKind\": [\n        \"ORG\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/resources/query",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"resources",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate Tenant - Step 0 - Create Tenant Admin role",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f1b82685-7aa0-4cda-8e4a-021acaa56928",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b7f6eb04-cce6-43d4-804e-ee2fcd6f9213",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"VCD Tenant Admin\",\n\"description\": \"VCD Tenant Admin Role for vRealize Operations - Tenant App for vCloud Director Tenant Users (Multi Tenant)\",\n\"system-created\": false,\n\"privilege-keys\": [\n    \"administration.api.read_access\",\n    \"administration.api.metering_policy_view\",\n    \"administration.accesscontrol.viewpage\",\n    \"vCloud Tenant-vCloud-vCloud World\",\n    \"content.alertdefinition.read\",\n    \"content.symptomdefinition.read\",\n    \"content.recommendation.view\",\n    \"content.notification.read\"\n]\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/suite-api/api/auth/roles",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"suite-api",
+						"api",
+						"auth",
+						"roles"
+					]
+				},
+				"description": "Only needed once: Create a Tenant Admin Role in vROPS, that's then being used for the individual tenant admin users"
+			},
+			"response": []
+		},
+		{
+			"name": "Activate Tenant - Step 3 - Create User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"description": "(Required) ",
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"urn:vcloud:org:098e5948-5b21-4d2f-9cb3-ffa7aa53dde7\",\n    \"password\": \"S0m$thingS3cre!\",\n    \"emailAddress\": \"urn:vcloud:org:098e5948-5b21-4d2f-9cb3-ffa7aa53dde7@elephant.org\",\n    \"firstName\": \"urn:vcloud:org:098e5948-5b21-4d2f-9cb3-ffa7aa53dde7\",\n    \"lastName\": \"elephant\",\n    \"enabled\": true,\n    \"role-permissions\": [\n        {\n            \"roleName\": \"VCD Tenant Admin\",\n            \"traversal-spec-instances\": [\n                {\n                    \"adapterKind\": \"vCloud\",\n                    \"resourceKind\": \"vCloud World\",\n                    \"name\": \"vCloud Tenant\",\n                    \"resourceSelection\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ],\n                    \"resourceSelections\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ]\n                }\n            ],\n            \"traversalSpecInstances\": [\n                {\n                    \"adapterKind\": \"vCloud\",\n                    \"resourceKind\": \"vCloud World\",\n                    \"name\": \"vCloud Tenant\",\n                    \"resourceSelection\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ],\n                    \"resourceSelections\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"rolePermissions\": [\n        {\n            \"roleName\": \"VCD Tenant Admin\",\n            \"traversal-spec-instances\": [\n                {\n                    \"adapterKind\": \"vCloud\",\n                    \"resourceKind\": \"vCloud World\",\n                    \"name\": \"vCloud Tenant\",\n                    \"resourceSelection\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ],\n                    \"resourceSelections\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ]\n                }\n            ],\n            \"traversalSpecInstances\": [\n                {\n                    \"adapterKind\": \"vCloud\",\n                    \"resourceKind\": \"vCloud World\",\n                    \"name\": \"vCloud Tenant\",\n                    \"resourceSelection\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ],\n                    \"resourceSelections\": [\n                        {\n                            \"type\": \"PROPAGATE\",\n                            \"resourceId\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ],\n                            \"resourceIds\": [\n                                \"012f7eda-2e9c-4ad7-be72-ebb7b553245e\"\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/users",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"users"
+					]
+				},
+				"description": "Create a new user that represents the Org, with a random password (vROPS Password complexity rules apply)"
+			},
+			"response": [
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				},
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Activate Tenant - Step 2 - Delete existing user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"description": "(Required) ",
+						"key": "Authorization",
+						"value": "vRealizeOpsToken {{tabearerToken}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{tenantapp}}/tenant-app-api/users/urn:vcloud:org:098e5948-5b21-4d2f-9cb3-ffa7aa53dde7",
+					"protocol": "https",
+					"host": [
+						"{{tenantapp}}"
+					],
+					"path": [
+						"tenant-app-api",
+						"users",
+						"urn:vcloud:org:098e5948-5b21-4d2f-9cb3-ffa7aa53dde7"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Forbidden",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "<string>",
+								"description": "(Required) "
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tenant-app-api/pricingpolicy/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenant-app-api",
+								"pricingpolicy",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"chargeModel\": \"<string>\",\n \"description\": \"<string>\",\n \"fixedPrice\": {\n  \"chargePeriod\": \"<string>\",\n  \"rate\": \"<double>\"\n },\n \"id\": \"<uuid>\",\n \"lastUpdateTimestamp\": \"<long>\",\n \"links\": [\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  },\n  {\n   \"description\": \"<string>\",\n   \"href\": \"<string>\",\n   \"name\": \"<string>\",\n   \"rel\": \"<string>\"\n  }\n ],\n \"meterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"metering\": {\n    \"baseRate\": \"<double>\",\n    \"chargeBasedOn\": \"<string>\",\n    \"chargeOnPowerState\": \"<string>\",\n    \"chargePeriod\": \"<string>\",\n    \"fixedPrice\": \"<double>\",\n    \"overage\": \"<boolean>\",\n    \"overageRate\": \"<double>\",\n    \"unit\": \"<string>\"\n   }\n  }\n ],\n \"name\": \"<string>\",\n \"namedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    },\n    {\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"name\": \"<string>\"\n    }\n   ]\n  }\n ],\n \"tagBasedMeterings\": [\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  },\n  {\n   \"itemName\": \"<string>\",\n   \"meterings\": [\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    },\n    {\n     \"key\": \"<string>\",\n     \"metering\": {\n      \"baseRate\": \"<double>\",\n      \"chargeBasedOn\": \"<string>\",\n      \"chargeOnPowerState\": \"<string>\",\n      \"chargePeriod\": \"<string>\",\n      \"fixedPrice\": \"<double>\",\n      \"overage\": \"<boolean>\",\n      \"overageRate\": \"<double>\",\n      \"unit\": \"<string>\"\n     },\n     \"value\": \"<string>\"\n    }\n   ]\n  }\n ]\n}"
+				}
+			]
 		}
 	],
 	"protocolProfileBehavior": {}

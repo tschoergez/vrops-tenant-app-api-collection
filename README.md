@@ -38,3 +38,11 @@ Additional environment vars will be created by some of the API samples.  There i
 
 Start with the "RUN FIRST - Get vROPS Auth Token" call, to authenticate. The token will be stored in a postman variable and used for subsequent API calls.
 Some examples use the "/suite-api" endpoint that allows to retrieve raw data from vRealize Operations. Refer to the [vRealize Operations API Documentation](https://code.vmware.com/apis/364/vrealize-operations) for details, and check out the [Postman collection for vRealize Operations](https://code.vmware.com/samples/4663/postman-client-collection-for-vrealize-operations-rest-apis)
+
+### Tenant Activation
+To publish Tenant App into the VCD tenant portal for an Org, run the "Activate Tenant - Step ..." calls:
+
+1. Create a User Role for VCD Tenant Admin users in vROPS (only has to be done once)
+2. Find the org and its IDs (name, UUID, resourceId). When this call succeeds, check the "Visualization" tab in postman's reponse area for a nice table view of all orgs (of the first response page)
+3. Delete an existing user for this Org (can always run, even no user yet exists): Add the org URN to the URL
+4. Create a new User for the Org to activate access. In the request body, replace username value with Org UUID, password with a random password (vROPS password complexity rules apply), email Address with orgUUID@org-name.org, firstname with orgUUID, last name with org name, and all further occurences of "resourceId" and "resourceIDs" with the org resource Id.
